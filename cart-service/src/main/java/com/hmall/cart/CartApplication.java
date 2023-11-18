@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @MapperScan("com.hmall.cart.mapper")
 @SpringBootApplication
-@EnableFeignClients(clients = ItemClient.class, defaultConfiguration = DefaultFeignConfig.class)
+@EnableFeignClients(basePackages = {"com.heima.api"}, defaultConfiguration = DefaultFeignConfig.class)
 public class CartApplication {
     public static void main(String[] args) {
         SpringApplication.run(CartApplication.class, args);

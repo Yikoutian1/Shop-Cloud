@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 
 /**
  * @ClassName DefaultFeignConfig
- * @Description TODO
+ * @Description
  * @Author QiuLiHang
  * @DATE 2023/11/17 017 19:32
  * @Version 1.0

@@ -14,6 +14,7 @@ import com.hmall.mapper.OrderMapper;
 import com.hmall.service.IOrderDetailService;
 import com.hmall.service.IOrderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,12 +34,13 @@ import java.util.stream.Collectors;
  * @since 2023-05-05
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements IOrderService {
 
-    private final ItemClient itemService;
+    private final ItemClient itemClient;
     private final IOrderDetailService detailService;
-    private final CartClient cartService;
+    private final CartClient cartClient;
 
     @Override
     @Transactional
@@ -52,7 +54,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                 .collect(Collectors.toMap(OrderDetailDTO::getItemId, OrderDetailDTO::getNum));
         Set<Long> itemIds = itemNumMap.keySet();
         // 1.3.查询商品
-        List<ItemDTO> items = itemService.queryItemByIds(itemIds);
+        List<ItemDTO> items = itemClient.queryItemByIds(itemIds);
         if (items == null || items.size() < itemIds.size()) {
             throw new BadRequestException("商品不存在");
         }
@@ -64,7 +66,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         order.setTotalFee(total);
         // 1.5.其它属性
         order.setPaymentType(orderFormDTO.getPaymentType());
-        order.setUserId(UserContext.getUser());
+        // TODO 当前如果使用 swagger测试则没有上下文对象, 我们先默认给一个1L
+//        order.setUserId(UserContext.getUser());
+        order.setUserId(1L);
         order.setStatus(1);
         // 1.6.将Order写入数据库order表中
         save(order);
@@ -73,13 +77,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         List<OrderDetail> details = buildDetails(order.getId(), items, itemNumMap);
         detailService.saveBatch(details);
 
-        // TODO 名字不一样
         // 3.清理购物车商品
-        cartService.removeByItemIds(itemIds);
+        cartClient.deleteCartItemByIds(itemIds);
 
         // 4.扣减库存
         try {
-            itemService.deductStock(detailDTOS);
+            itemClient.deductStock(detailDTOS);
         } catch (Exception e) {
             throw new RuntimeException("库存不足！");
         }
