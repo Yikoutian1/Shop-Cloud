@@ -1,0 +1,17 @@
+20:22:46:303  INFO 5328 --- [main] com.hmall.TradeApplication               : Starting HMallApplication using Java 11.0.21 on Calyee with PID 5328 (D:\JavaDemo\cloud-hmall\hm-service\target\classes started by iCalyee in D:\JavaDemo\cloud-hmall)
+20:22:46:312 DEBUG 5328 --- [main] com.hmall.TradeApplication               : Running with Spring Boot v2.7.12, Spring v5.3.27
+20:22:46:312  INFO 5328 --- [main] com.hmall.TradeApplication               : The following 1 profile is active: "local"
+20:22:47:558  INFO 5328 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+20:22:47:560  INFO 5328 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+20:22:47:589  INFO 5328 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+20:22:48:012  INFO 5328 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+20:22:48:020  INFO 5328 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+20:22:48:020  INFO 5328 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.75]
+20:22:48:132  INFO 5328 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+20:22:48:132  INFO 5328 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1779 ms
+20:22:50:451  INFO 5328 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2ControllerWebMvc#getDocumentation(String, HttpServletRequest)]
+20:22:50:750  INFO 5328 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+20:22:50:751  INFO 5328 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Documentation plugins bootstrapped
+20:22:50:753  INFO 5328 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+20:22:50:777  INFO 5328 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+20:22:50:927  INFO 5328 --- [main] com.hmall.TradeApplication               : Started HMallApplication in 5.029 seconds (JVM running for 6.423)
