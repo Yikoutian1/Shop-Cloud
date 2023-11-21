@@ -1,7 +1,6 @@
 package com.heima.item.controller;
 
 
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.heima.item.domain.dto.ItemDTO;
 import com.heima.item.domain.dto.OrderDetailDTO;
@@ -13,6 +12,7 @@ import com.hmall.common.utils.BeanUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,13 +21,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/items")
 @RequiredArgsConstructor
+@Slf4j
 public class ItemController {
 
     private final IItemService itemService;
 
     @ApiOperation("分页查询商品")
     @GetMapping("/page")
-    public PageDTO<ItemDTO> queryItemByPage(PageQuery query) {
+    public PageDTO<ItemDTO> queryItemByPage(PageQuery query,
+                                            @RequestHeader(value = "MyRequestHeadKey", required = false) String MyRequestHeadKey) {
+        log.info("RequestHeaderFilter = {}", MyRequestHeadKey);
         // 1.分页查询
         Page<Item> result = itemService.page(query.toMpPage("update_time", false));
         // 2.封装并返回
@@ -36,7 +39,7 @@ public class ItemController {
 
     @ApiOperation("根据id批量查询商品")
     @GetMapping
-    public List<ItemDTO> queryItemByIds(@RequestParam("ids") List<Long> ids){
+    public List<ItemDTO> queryItemByIds(@RequestParam("ids") List<Long> ids) {
         return itemService.queryItemByIds(ids);
     }
 
@@ -55,7 +58,7 @@ public class ItemController {
 
     @ApiOperation("更新商品状态")
     @PutMapping("/status/{id}/{status}")
-    public void updateItemStatus(@PathVariable("id") Long id, @PathVariable("status") Integer status){
+    public void updateItemStatus(@PathVariable("id") Long id, @PathVariable("status") Integer status) {
         Item item = new Item();
         item.setId(id);
         item.setStatus(status);
@@ -79,7 +82,7 @@ public class ItemController {
 
     @ApiOperation("批量扣减库存")
     @PutMapping("/stock/deduct")
-    public void deductStock(@RequestBody List<OrderDetailDTO> items){
+    public void deductStock(@RequestBody List<OrderDetailDTO> items) {
         itemService.deductStock(items);
     }
 }
